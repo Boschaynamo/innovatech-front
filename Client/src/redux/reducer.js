@@ -1,11 +1,15 @@
 import {
-  CLEAN_PRODUCT_BY_ID,
+  
   GET_PRODUCTS,
   GET_PRODUCT_BY_ID,
   FILTER_BY_MODEL,
   GET_CATEGORIES,
   GET_ORDER,
   GET_PRODUCTS_BY_CATEGORIES,
+  SIGN_IN_FAILURE,
+  SIGN_IN_SUCCESS,
+  SIGN_UP_FAILURE,
+  SIGN_UP_SUCCESS,
 } from "./actions";
 
 const initialState = {
@@ -18,7 +22,9 @@ const initialState = {
   pagenumber: '1',
   //******* */
   getProductById: {},
-  filterByCategories: []
+  filterByCategories: [],
+  user: null,
+  error: null
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -52,16 +58,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         getProductById: action.payload,
       };
-    case GET_PRODUCT_BY_ID:
-      return {
-        ...state,
-        getProductById: action.payload,
-      };
-    case CLEAN_PRODUCT_BY_ID:
-      return {
-        ...state,
-        getProductById: action.payload,
-      };
+    
     case FILTER_BY_MODEL:
       return {
         ...state,
@@ -81,6 +78,13 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         totalpages: action.payload
       }
+
+      case SIGN_IN_SUCCESS:
+        case SIGN_UP_SUCCESS:
+          return { ...state, user: action.payload.user, error: null };
+        case SIGN_IN_FAILURE:
+        case SIGN_UP_FAILURE:
+          return { ...state, error: action.payload };
     default:
       return { ...state };
   }
