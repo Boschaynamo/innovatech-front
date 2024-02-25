@@ -6,13 +6,33 @@ export const FILTER_BY_MODEL = 'FILTER_BY_MODEL';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_ORDER = 'GET_ORDER'
 export const GET_PRODUCTS_BY_CATEGORIES = 'GET_PRODUCTS_BY_CATEGORIES';
-<<<<<<< HEAD
-export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
-export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS'
-export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE'
-export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE'
+export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE';
+export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
+export const PAYMENT_ID = 'PAYMENT_ID,';
 
 export const BASE_URL = 'http://localhost:3001'; 
+
+
+export function paymentGateway() {
+    return async function (dispatch) {
+        try {
+            const response = await axios.post("http://localhost:3001/create_preference", {
+                title: "Camiseta",
+                price: 500,
+                quantity: 1,
+                // currency_id: 'ARS'
+            })
+            console.log(response);
+            const { id } = response.data;
+            console.log(id);
+            dispatch({ type: PAYMENT_ID, payload: id })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 
 export const signIn = (email, password) => {
   return async (dispatch) => {
@@ -35,28 +55,6 @@ export const signUp = (email, password) => {
     }
   };
 };
-=======
-export const PAYMENT_ID = 'PAYMENT_ID';
-
-export function paymentGateway() {
-    return async function (dispatch) {
-        try {
-            const response = await axios.post("http://localhost:3001/create_preference", {
-                title: "Camiseta",
-                price: 500,
-                quantity: 1,
-                // currency_id: 'ARS'
-            })
-            console.log(response);
-            const { id } = response.data;
-            console.log(id);
-            dispatch({ type: PAYMENT_ID, payload: id })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}
->>>>>>> b1b72eadc7162fa30092ee4e7b7eb30aa1687ad9
 
 export function postForm(payload) {
     return async function () {
