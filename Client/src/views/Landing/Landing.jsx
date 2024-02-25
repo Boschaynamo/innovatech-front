@@ -1,15 +1,30 @@
 import style from './Landing.module.css'
 import Carousel from '../../components/Carousel/Carousel'
 import { Link } from 'react-router-dom'
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import { useDispatch, useSelector } from 'react-redux';
+import { paymentGateway } from '../../redux/actions'
 
 const Home = () => {
+  const dispatch = useDispatch()
+  const paymentID = useSelector(state => state.paymentID)
+
+  initMercadoPago('TEST-473413c2-ccef-459a-967d-2456c1ec2596', {
+    locale: "es-AR",
+  });
+
+  const handleBuy = async () => {
+    await dispatch(paymentGateway())
+  }
 
   const scroll = () => {
     window.scrollTo(0, 0);
   }
- 
+
   return (
     <div className={style.container}>
+      {/* <button className={style.button} onClick={handleBuy}>Buy</button>
+      {paymentID && <Wallet initialization={{ preferenceId: paymentID }} />} */}
       <div className={style.section}>
         <Link to={'/detail/29'} className={style.productOne} onClick={scroll}>
           <img className={style.productsFirst} src='https://res.cloudinary.com/dfhk5g0yv/image/upload/v1708216623/Innova%20Tech/b4p4ylte2mebs9yxm1cl.png' alt="" />

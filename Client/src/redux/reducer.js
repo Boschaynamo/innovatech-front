@@ -6,10 +6,14 @@ import {
   GET_CATEGORIES,
   GET_ORDER,
   GET_PRODUCTS_BY_CATEGORIES,
+<<<<<<< HEAD
   SIGN_IN_FAILURE,
   SIGN_IN_SUCCESS,
   SIGN_UP_FAILURE,
   SIGN_UP_SUCCESS,
+=======
+  PAYMENT_ID,
+>>>>>>> b1b72eadc7162fa30092ee4e7b7eb30aa1687ad9
 } from "./actions";
 
 const initialState = {
@@ -23,12 +27,22 @@ const initialState = {
   //******* */
   getProductById: {},
   filterByCategories: [],
+<<<<<<< HEAD
   user: null,
   error: null
+=======
+  paymentID: null
+>>>>>>> b1b72eadc7162fa30092ee4e7b7eb30aa1687ad9
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case PAYMENT_ID:
+      return {
+        ...state,
+        paymentID: action.payload
+      }
+
     case GET_PRODUCTS:
       return {
         ...state,
