@@ -17,6 +17,8 @@ import {
   SIGN_UP_FAILURE,
   SIGN_UP_SUCCESS,
   LOGIN_SUCCESS,
+  GOOGLE_LOGIN_SUCCESS,
+  
 } from "./actions";
 
 const initialState = {
@@ -200,6 +202,25 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload
       }
+
+      case 'INICIAR_AUTENTICACION_GOOGLE':
+        axios.get('http://localhost:80/auth/google')
+        .then(response => {
+          // Manejar la respuesta si es necesario
+          dispatch(googleLoginSuccess(response.data)); // Llamar a la acción googleLoginSuccess con los datos del usuario
+        })
+        .catch(error => {
+          // Manejar el error si es necesario
+          console.error('Error al iniciar autenticación con Google:', error);
+        });
+      return state;
+
+      case GOOGLE_LOGIN_SUCCESS:
+  return {
+    ...state,
+    isAuthenticated: true,
+    user: action.payload,
+  };
 
     case SIGN_IN_SUCCESS:
       return { ...state, user: action.payload.user, error: null }

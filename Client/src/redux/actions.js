@@ -17,27 +17,10 @@ export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_ONE_FROM_CART = 'REMOVE_ONE_FROM_CART';
 export const REMOVE_ALL_FROM_CART = 'REMOVE_ALL_FROM_CART,';
 export const INJECT_CART_DATA = 'INJECT_CART_DATA'
-export const LOGIN_START = 'LOGIN_START'
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+
+export const GOOGLE_LOGIN_SUCCESS= 'GOOGLE_LOGIN_SUCCESS'
 
 
-export const loginStart = () => {
-  return {
-    type: LOGIN_START,
-  }
-};
-
-export const loginSuccess = () => {
-  return {
-    type: LOGIN_SUCCESS,
-  }
-};
-
-export const loginFailure = (error) => ({
-  type: LOGIN_FAILURE,
-  payload: error,
-});
 
 export function paymentGateway(cart) {
   // console.log(cart);
@@ -70,7 +53,30 @@ export function paymentGateway(cart) {
   }
 }
 
-
+export const googleLoginSuccess = (userData) => {
+    return {
+      type: GOOGLE_LOGIN_SUCCESS,
+      payload: userData
+    };
+  };
+  
+  export const iniciarAutenticacionGoogle = () => {
+    return dispatch => {
+      fetch('http://localhost:80/auth/google')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al iniciar autenticación con Google');
+          }
+          return response.json();
+        })
+        .then(data => {
+          dispatch(googleLoginSuccess(data));
+        })
+        .catch(error => {
+          console.error('Error al iniciar autenticación con Google:', error);
+        });
+    };
+  };
 
 export const LoginAction = ({ email, password }) => {
   return async (dispatch) => {
